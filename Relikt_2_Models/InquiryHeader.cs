@@ -23,5 +23,6 @@ namespace Relikt_2_Models
         public string FullName { get; set; }
         [Required]
         public string Email { get; set; }
+        public InquiryDetail InquiryDetail { get; set; }
     }
 }

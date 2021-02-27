@@ -10,7 +10,6 @@ namespace Relikt_2_Models
 {
     public class InquiryDetail
     {
-        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -38,4 +37,5 @@ namespace Relikt_2_Models
         [ForeignKey("SizeTypeId")]
         public virtual SizeType SizeType { get; set; }
     }
+
 }

@@ -18,5 +18,6 @@ namespace Relikt_2_Models
         [Required]
         [Range(1, int.MaxValue, ErrorMessage = "Номер порядка отображения должен быть более 0")]
         public int DisplayOrder { get; set; }
+        public InquiryDetail InquiryDetail { get; set; }
     }
 }

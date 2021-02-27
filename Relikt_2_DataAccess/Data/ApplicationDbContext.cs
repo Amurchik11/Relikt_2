@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Relikt_2_DataAccess.Configurations;
 using Relikt_2_Models;
 using System;
 using System.Collections.Generic;
@@ -23,5 +24,12 @@ namespace Relikt_2_DataAccess
         public DbSet<Coupon> Coupon { get; set; }
         public DbSet<InquiryHeader> InquiryHeader { get; set; }
         public DbSet<InquiryDetail> InquiryDetail { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.ApplyConfiguration(new InquiryDetailConfiguration());
+
+            base.OnModelCreating(builder);
+        }
     }
 }
