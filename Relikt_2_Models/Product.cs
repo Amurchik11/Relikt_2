@@ -37,5 +37,6 @@ namespace Relikt_2_Models
         public int SizeTypeId { get; set; }
         [ForeignKey("SizeTypeId")] 
         public virtual SizeType SizeType { get; set; }
+        public InquiryDetail InquiryDetail { get; set; }
     }
 }

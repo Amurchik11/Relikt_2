@@ -14,6 +14,6 @@ namespace Relikt_2_Models
         [DisplayName("Размер")]
         [Required]
         public string Name { get; set; }
-        
+        public InquiryDetail InquiryDetail { get; set; }
     }
 }

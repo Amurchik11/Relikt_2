@@ -10,8 +10,8 @@ using Relikt_2_DataAccess;
 namespace Relikt_2_DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210220160057_test")]
-    partial class test
+    [Migration("20210227210609_AddInquiryDetail")]
+    partial class AddInquiryDetail
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -290,6 +290,80 @@ namespace Relikt_2_DataAccess.Migrations
                     b.ToTable("Coupon");
                 });
 
+            modelBuilder.Entity("Relikt_2_Models.InquiryDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("ApplicationTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InquiryHeaderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SizeTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationTypeId")
+                        .IsUnique();
+
+                    b.HasIndex("CategoryId")
+                        .IsUnique();
+
+                    b.HasIndex("InquiryHeaderId")
+                        .IsUnique();
+
+                    b.HasIndex("ProductId")
+                        .IsUnique();
+
+                    b.HasIndex("SizeTypeId")
+                        .IsUnique();
+
+                    b.ToTable("InquiryDetail");
+                });
+
+            modelBuilder.Entity("Relikt_2_Models.InquiryHeader", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InquiryDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.ToTable("InquiryHeader");
+                });
+
             modelBuilder.Entity("Relikt_2_Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -410,6 +484,58 @@ namespace Relikt_2_DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Relikt_2_Models.InquiryDetail", b =>
+                {
+                    b.HasOne("Relikt_2_Models.ApplicationType", "ApplicationType")
+                        .WithOne("InquiryDetail")
+                        .HasForeignKey("Relikt_2_Models.InquiryDetail", "ApplicationTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Relikt_2_Models.Category", "Category")
+                        .WithOne("InquiryDetail")
+                        .HasForeignKey("Relikt_2_Models.InquiryDetail", "CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Relikt_2_Models.InquiryHeader", "InquiryHeader")
+                        .WithOne("InquiryDetail")
+                        .HasForeignKey("Relikt_2_Models.InquiryDetail", "InquiryHeaderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Relikt_2_Models.Product", "Product")
+                        .WithOne("InquiryDetail")
+                        .HasForeignKey("Relikt_2_Models.InquiryDetail", "ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Relikt_2_Models.SizeType", "SizeType")
+                        .WithOne("InquiryDetail")
+                        .HasForeignKey("Relikt_2_Models.InquiryDetail", "SizeTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("ApplicationType");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("InquiryHeader");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("SizeType");
+                });
+
+            modelBuilder.Entity("Relikt_2_Models.InquiryHeader", b =>
+                {
+                    b.HasOne("Relikt_2_Models.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.Navigation("ApplicationUser");
+                });
+
             modelBuilder.Entity("Relikt_2_Models.Product", b =>
                 {
                     b.HasOne("Relikt_2_Models.ApplicationType", "ApplicationType")
@@ -435,6 +561,31 @@ namespace Relikt_2_DataAccess.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("SizeType");
+                });
+
+            modelBuilder.Entity("Relikt_2_Models.ApplicationType", b =>
+                {
+                    b.Navigation("InquiryDetail");
+                });
+
+            modelBuilder.Entity("Relikt_2_Models.Category", b =>
+                {
+                    b.Navigation("InquiryDetail");
+                });
+
+            modelBuilder.Entity("Relikt_2_Models.InquiryHeader", b =>
+                {
+                    b.Navigation("InquiryDetail");
+                });
+
+            modelBuilder.Entity("Relikt_2_Models.Product", b =>
+                {
+                    b.Navigation("InquiryDetail");
+                });
+
+            modelBuilder.Entity("Relikt_2_Models.SizeType", b =>
+                {
+                    b.Navigation("InquiryDetail");
                 });
 #pragma warning restore 612, 618
         }

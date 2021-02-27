@@ -14,6 +14,6 @@ namespace Relikt_2_Models
         [DisplayName("Название")]
         [Required]
         public string Name { get; set; }
-        
+        public InquiryDetail InquiryDetail { get; set; }
     }
 }
